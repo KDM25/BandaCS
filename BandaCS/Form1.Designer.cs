@@ -1,0 +1,314 @@
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace BandaCS
+{
+    partial class Form1
+    {
+        private IContainer components = null;
+        private TableLayoutPanel distribucion;
+        private GroupBox grupoVideo;
+        private SplitContainer splitVideos;
+        private PictureBox picOriginal;
+        private PictureBox pictMascara;
+        private TableLayoutPanel controles;
+        private FlowLayoutPanel fila;
+        private FlowLayoutPanel ajustes;
+        private ComboBox cmbCamaras;
+        private Button btnIniciar;
+        private Button btnReiniciar;
+        private Button btnGuardarPrueba;
+        private Button btnApagar;
+        private Label lblUmbral;
+        private TrackBar trackUmbral;
+        private CheckBox chkMostrarMascara;
+        private Label lblEstado;
+        private GroupBox grupoEstadisticas;
+        private TableLayoutPanel estadisticas;
+        private Label lblConteoPiezas;
+        private Label lblIndicadores;
+        private GroupBox grupoBD;
+        private TableLayoutPanel panelBD;
+        private Label lblBDConexion;
+        private Label lblBDResumen;
+        private DataGridView dgvInspecciones;
+        private Timer relojInterfaz;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && components != null) components.Dispose();
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.components = new Container();
+            this.distribucion = new TableLayoutPanel();
+            this.grupoVideo = new GroupBox();
+            this.splitVideos = new SplitContainer();
+            this.picOriginal = new PictureBox();
+            this.pictMascara = new PictureBox();
+            this.controles = new TableLayoutPanel();
+            this.fila = new FlowLayoutPanel();
+            this.ajustes = new FlowLayoutPanel();
+            this.cmbCamaras = new ComboBox();
+            this.btnIniciar = new Button();
+            this.btnReiniciar = new Button();
+            this.btnGuardarPrueba = new Button();
+            this.btnApagar = new Button();
+            this.lblUmbral = new Label();
+            this.trackUmbral = new TrackBar();
+            this.chkMostrarMascara = new CheckBox();
+            this.lblEstado = new Label();
+            this.grupoEstadisticas = new GroupBox();
+            this.estadisticas = new TableLayoutPanel();
+            this.lblConteoPiezas = new Label();
+            this.lblIndicadores = new Label();
+            this.grupoBD = new GroupBox();
+            this.panelBD = new TableLayoutPanel();
+            this.lblBDConexion = new Label();
+            this.lblBDResumen = new Label();
+            this.dgvInspecciones = new DataGridView();
+            this.relojInterfaz = new Timer(this.components);
+
+            this.SuspendLayout();
+            this.distribucion.SuspendLayout();
+            this.grupoVideo.SuspendLayout();
+            ((ISupportInitialize)(this.splitVideos)).BeginInit();
+            this.splitVideos.Panel1.SuspendLayout();
+            this.splitVideos.Panel2.SuspendLayout();
+            this.splitVideos.SuspendLayout();
+            ((ISupportInitialize)(this.picOriginal)).BeginInit();
+            ((ISupportInitialize)(this.pictMascara)).BeginInit();
+            this.controles.SuspendLayout();
+            this.fila.SuspendLayout();
+            this.ajustes.SuspendLayout();
+            ((ISupportInitialize)(this.trackUmbral)).BeginInit();
+            this.grupoEstadisticas.SuspendLayout();
+            this.estadisticas.SuspendLayout();
+            this.grupoBD.SuspendLayout();
+            this.panelBD.SuspendLayout();
+            ((ISupportInitialize)(this.dgvInspecciones)).BeginInit();
+
+            // distribucion: cámaras a la izquierda, MySQL a la derecha.
+            this.distribucion.Name = "distribucion";
+            this.distribucion.Dock = DockStyle.Fill;
+            this.distribucion.Padding = new Padding(14, 10, 14, 12);
+            this.distribucion.ColumnCount = 2;
+            this.distribucion.RowCount = 3;
+            this.distribucion.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67F));
+            this.distribucion.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            this.distribucion.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            this.distribucion.RowStyles.Add(new RowStyle(SizeType.Absolute, 118F));
+            this.distribucion.RowStyles.Add(new RowStyle(SizeType.Absolute, 102F));
+            this.distribucion.Controls.Add(this.grupoVideo, 0, 0);
+            this.distribucion.Controls.Add(this.grupoBD, 1, 0);
+            this.distribucion.Controls.Add(this.controles, 0, 1);
+            this.distribucion.SetColumnSpan(this.controles, 2);
+            this.distribucion.Controls.Add(this.grupoEstadisticas, 0, 2);
+            this.distribucion.SetColumnSpan(this.grupoEstadisticas, 2);
+
+            // Cámara y máscara.
+            this.grupoVideo.Name = "grupoVideo";
+            this.grupoVideo.Text = "Imagen original y máscara de visión artificial";
+            this.grupoVideo.Dock = DockStyle.Fill;
+            this.grupoVideo.Padding = new Padding(8);
+            this.grupoVideo.Controls.Add(this.splitVideos);
+            this.splitVideos.Name = "splitVideos";
+            this.splitVideos.Size = new Size(650, 430);
+            this.splitVideos.Dock = DockStyle.Fill;
+            this.splitVideos.Orientation = Orientation.Vertical;
+            this.splitVideos.Panel1MinSize = 100;
+            this.splitVideos.Panel2MinSize = 100;
+            this.splitVideos.Panel1.Controls.Add(this.picOriginal);
+            this.splitVideos.Panel2.Controls.Add(this.pictMascara);
+            this.picOriginal.Name = "picOriginal";
+            this.picOriginal.Dock = DockStyle.Fill;
+            this.picOriginal.BackColor = Color.Black;
+            this.picOriginal.SizeMode = PictureBoxSizeMode.Zoom;
+            this.pictMascara.Name = "pictMascara";
+            this.pictMascara.Dock = DockStyle.Fill;
+            this.pictMascara.BackColor = Color.Black;
+            this.pictMascara.SizeMode = PictureBoxSizeMode.Zoom;
+
+            // MySQL a la derecha, con refresco lógico desde Form1.cs cada 2 s.
+            this.grupoBD.Name = "grupoBD";
+            this.grupoBD.Text = "Base de datos MySQL - Registros en vivo";
+            this.grupoBD.Dock = DockStyle.Fill;
+            this.grupoBD.Padding = new Padding(10, 18, 10, 8);
+            this.grupoBD.Controls.Add(this.panelBD);
+            this.panelBD.Name = "panelBD";
+            this.panelBD.Dock = DockStyle.Fill;
+            this.panelBD.ColumnCount = 1;
+            this.panelBD.RowCount = 3;
+            this.panelBD.RowStyles.Add(new RowStyle(SizeType.Absolute, 27F));
+            this.panelBD.RowStyles.Add(new RowStyle(SizeType.Absolute, 28F));
+            this.panelBD.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            this.panelBD.Controls.Add(this.lblBDConexion, 0, 0);
+            this.panelBD.Controls.Add(this.lblBDResumen, 0, 1);
+            this.panelBD.Controls.Add(this.dgvInspecciones, 0, 2);
+            this.lblBDConexion.Name = "lblBDConexion";
+            this.lblBDConexion.Text = "MySQL: sin conexión";
+            this.lblBDConexion.Dock = DockStyle.Fill;
+            this.lblBDConexion.ForeColor = Color.DarkSlateBlue;
+            this.lblBDConexion.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            this.lblBDResumen.Name = "lblBDResumen";
+            this.lblBDResumen.Text = "Total: 0 | Actualización: cada 2 segundos";
+            this.lblBDResumen.Dock = DockStyle.Fill;
+            this.dgvInspecciones.Name = "dgvInspecciones";
+            this.dgvInspecciones.Dock = DockStyle.Fill;
+            this.dgvInspecciones.BackgroundColor = Color.White;
+            this.dgvInspecciones.BorderStyle = BorderStyle.FixedSingle;
+            this.dgvInspecciones.AutoGenerateColumns = true;
+            this.dgvInspecciones.ReadOnly = true;
+            this.dgvInspecciones.AllowUserToAddRows = false;
+            this.dgvInspecciones.AllowUserToDeleteRows = false;
+            this.dgvInspecciones.RowHeadersVisible = false;
+            this.dgvInspecciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.dgvInspecciones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            this.dgvInspecciones.ScrollBars = ScrollBars.Both;
+
+            // Controles de la interfaz.
+            this.controles.Name = "controles";
+            this.controles.Dock = DockStyle.Fill;
+            this.controles.ColumnCount = 1;
+            this.controles.RowCount = 2;
+            this.controles.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
+            this.controles.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            this.controles.Controls.Add(this.fila, 0, 0);
+            this.controles.Controls.Add(this.ajustes, 0, 1);
+            this.fila.Name = "fila";
+            this.fila.Dock = DockStyle.Fill;
+            this.fila.WrapContents = false;
+            this.fila.AutoScroll = true;
+            this.fila.Padding = new Padding(4, 6, 0, 3);
+            this.fila.Controls.Add(this.cmbCamaras);
+            this.fila.Controls.Add(this.btnIniciar);
+            this.fila.Controls.Add(this.btnReiniciar);
+            this.fila.Controls.Add(this.btnGuardarPrueba);
+            this.fila.Controls.Add(this.btnApagar);
+            this.cmbCamaras.Name = "cmbCamaras";
+            this.cmbCamaras.Width = 220;
+            this.cmbCamaras.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.cmbCamaras.Margin = new Padding(3, 6, 12, 3);
+            this.btnIniciar.Name = "btnIniciar";
+            this.btnIniciar.Text = "Iniciar sistema";
+            this.btnIniciar.Width = 160;
+            this.btnIniciar.Height = 36;
+            this.btnIniciar.BackColor = Color.LightGreen;
+            this.btnIniciar.Enabled = false;
+            this.btnReiniciar.Name = "btnReiniciar";
+            this.btnReiniciar.Text = "Reiniciar conteo";
+            this.btnReiniciar.Width = 150;
+            this.btnReiniciar.Height = 36;
+            this.btnReiniciar.Enabled = false;
+            this.btnGuardarPrueba.Name = "btnGuardarPrueba";
+            this.btnGuardarPrueba.Text = "Guardar prueba";
+            this.btnGuardarPrueba.Width = 140;
+            this.btnGuardarPrueba.Height = 36;
+            this.btnApagar.Name = "btnApagar";
+            this.btnApagar.Text = "Apagar sistema";
+            this.btnApagar.Width = 155;
+            this.btnApagar.Height = 36;
+            this.btnApagar.BackColor = Color.Firebrick;
+            this.btnApagar.ForeColor = Color.White;
+
+            this.ajustes.Name = "ajustes";
+            this.ajustes.Dock = DockStyle.Fill;
+            this.ajustes.WrapContents = false;
+            this.ajustes.AutoScroll = true;
+            this.ajustes.Padding = new Padding(4, 4, 0, 0);
+            this.ajustes.Controls.Add(this.lblUmbral);
+            this.ajustes.Controls.Add(this.trackUmbral);
+            this.ajustes.Controls.Add(this.chkMostrarMascara);
+            this.ajustes.Controls.Add(this.lblEstado);
+            this.lblUmbral.Name = "lblUmbral";
+            this.lblUmbral.Text = "Umbral AUTO: 0 (0)";
+            this.lblUmbral.AutoSize = true;
+            this.lblUmbral.Margin = new Padding(2, 12, 8, 3);
+            this.trackUmbral.Name = "trackUmbral";
+            this.trackUmbral.Minimum = 0;
+            this.trackUmbral.Maximum = 255;
+            this.trackUmbral.TickFrequency = 20;
+            this.trackUmbral.Width = 210;
+            this.trackUmbral.Height = 42;
+            this.chkMostrarMascara.Name = "chkMostrarMascara";
+            this.chkMostrarMascara.Text = "Mostrar máscara";
+            this.chkMostrarMascara.AutoSize = true;
+            this.chkMostrarMascara.Margin = new Padding(8, 12, 12, 3);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Text = "Preparando cámara y servicios...";
+            this.lblEstado.ForeColor = Color.MidnightBlue;
+            this.lblEstado.AutoSize = false;
+            this.lblEstado.Width = 610;
+            this.lblEstado.Height = 46;
+            this.lblEstado.Margin = new Padding(8, 9, 0, 3);
+
+            // Conteos y estadísticas debajo de ambos paneles.
+            this.grupoEstadisticas.Name = "grupoEstadisticas";
+            this.grupoEstadisticas.Text = "Conteo y estadísticas";
+            this.grupoEstadisticas.Dock = DockStyle.Fill;
+            this.grupoEstadisticas.Padding = new Padding(12, 16, 12, 6);
+            this.grupoEstadisticas.Controls.Add(this.estadisticas);
+            this.estadisticas.Name = "estadisticas";
+            this.estadisticas.Dock = DockStyle.Fill;
+            this.estadisticas.RowCount = 2;
+            this.estadisticas.ColumnCount = 1;
+            this.estadisticas.RowStyles.Add(new RowStyle(SizeType.Percent, 53F));
+            this.estadisticas.RowStyles.Add(new RowStyle(SizeType.Percent, 47F));
+            this.estadisticas.Controls.Add(this.lblConteoPiezas, 0, 0);
+            this.estadisticas.Controls.Add(this.lblIndicadores, 0, 1);
+            this.lblConteoPiezas.Name = "lblConteoPiezas";
+            this.lblConteoPiezas.Dock = DockStyle.Fill;
+            this.lblConteoPiezas.Text = "TORNILLOS [0]: 0 | TUERCAS [1]: 0 | NO REGISTRADOS [2]: 0";
+            this.lblConteoPiezas.ForeColor = Color.DarkBlue;
+            this.lblConteoPiezas.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            this.lblIndicadores.Name = "lblIndicadores";
+            this.lblIndicadores.Dock = DockStyle.Fill;
+            this.lblIndicadores.Text = "Total: 0 | Promedio: 0 piezas/min";
+            this.lblIndicadores.Font = new Font("Segoe UI", 9F);
+
+            this.relojInterfaz.Interval = 500;
+            this.relojInterfaz.Tick += new EventHandler(this.relojInterfaz_Tick);
+            this.btnIniciar.Click += new EventHandler(this.btnIniciar_Click);
+            this.btnReiniciar.Click += new EventHandler(this.btnReiniciar_Click);
+            this.btnApagar.Click += new EventHandler(this.btnApagar_Click);
+            this.btnGuardarPrueba.Click += new EventHandler(this.btnGuardarPrueba_Click);
+            this.trackUmbral.Scroll += new EventHandler(this.trackUmbral_Scroll);
+            this.chkMostrarMascara.CheckedChanged += new EventHandler(this.chkMostrarMascara_CheckedChanged);
+            this.Activated += new EventHandler(this.Form1_Activated);
+
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.Text = "Visión Artificial - Clasificador Industrial";
+            this.Name = "Form1";
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.MinimumSize = new Size(1050, 650);
+            this.ClientSize = new Size(1450, 820);
+            this.BackColor = Color.FromArgb(245, 247, 250);
+            this.Font = new Font("Segoe UI", 9F);
+            this.Controls.Add(this.distribucion);
+
+            ((ISupportInitialize)(this.dgvInspecciones)).EndInit();
+            this.panelBD.ResumeLayout(false);
+            this.grupoBD.ResumeLayout(false);
+            this.estadisticas.ResumeLayout(false);
+            this.grupoEstadisticas.ResumeLayout(false);
+            ((ISupportInitialize)(this.trackUmbral)).EndInit();
+            this.ajustes.ResumeLayout(false);
+            this.ajustes.PerformLayout();
+            this.fila.ResumeLayout(false);
+            this.controles.ResumeLayout(false);
+            ((ISupportInitialize)(this.pictMascara)).EndInit();
+            ((ISupportInitialize)(this.picOriginal)).EndInit();
+            this.splitVideos.Panel2.ResumeLayout(false);
+            this.splitVideos.Panel1.ResumeLayout(false);
+            ((ISupportInitialize)(this.splitVideos)).EndInit();
+            this.splitVideos.ResumeLayout(false);
+            this.grupoVideo.ResumeLayout(false);
+            this.distribucion.ResumeLayout(false);
+            this.ResumeLayout(false);
+        }
+    }
+}
